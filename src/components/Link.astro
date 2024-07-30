@@ -1,0 +1,25 @@
+---
+type Props = {
+  link: string;
+};
+
+const { link } = Astro.props;
+---
+
+<a href={link}>
+  <slot />
+</a>
+
+<style lang="scss">
+  a {
+    color: white;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    & :global(h2) {
+      transition: all 0.3s ease;
+      &:hover {
+        filter: brightness(1.5);
+      }
+    }
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import Link from "../components/Link.astro";
+import Layout from "../layouts/Layout.astro";
+
+const res = await fetch(
+  "https://randomuser.me/api?results=10&seed=db54e4c093b25574"
+).then((res) => res.json());
+
+console.log(res);
+const data = res.results as any[];
+---
+
+<Layout title="About Page">
+  <p>About</p>
+  <div class="list">
+    {
+      data.map((item) => (
+        <div>
+          <a href={`/users/${item.email.split("@")[0]}`}>
+            <p>Email: {item.email}</p>
+            <p>Name: {item.name.first}</p>
+          </a>
+        </div>
+      ))
+    }
+  </div>
+
+  <Link link="/"> Back To Home </Link>
+</Layout>
+
+<style lang="scss">
+  .list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    div {
+      padding: 15px;
+      border: 1px solid white;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+  a {
+    p {
+      color: white;
+    }
+  }
+</style>

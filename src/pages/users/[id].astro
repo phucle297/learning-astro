@@ -1,0 +1,31 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const res = await fetch(
+    "https://randomuser.me/api?results=10&seed=db54e4c093b25574"
+  ).then((res) => res.json());
+
+  const data = res.results as any[];
+  return data.map((item) => ({
+    params: { id: item.email.split("@")[0] },
+  }));
+}
+
+const { id } = Astro.params;
+---
+
+<Layout title="Users">
+  <p>Email: {id}@example.com</p>
+  <a href="/"> Back to Home</a>
+</Layout>
+<style lang="scss">
+  a {
+    color: bisque;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    &:hover {
+      filter: brightness(1.5);
+    }
+  }
+</style>
